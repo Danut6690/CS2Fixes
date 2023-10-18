@@ -392,20 +392,6 @@ CON_COMMAND_CHAT(takemoney, "take your money")
 	player->m_pInGameMoneyServices->m_iAccount = money - amount;
 }
 
-CON_COMMAND_CHAT(sethealth, "set your health")
-{
-	if (!player)
-		return;
-
-	int health = atoi(args[1]);
-
-	Z_CBaseEntity *pEnt = (Z_CBaseEntity *)player->GetPawn();
-
-	pEnt->m_iHealth = health;
-
-	ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Your health is now %d", health);
-}
-
 CON_COMMAND_CHAT(test_target, "test string targetting")
 {
 	if (!player)
@@ -555,6 +541,21 @@ CON_COMMAND_CHAT(setinteraction, "set a player's interaction flags")
 
 		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Setting interaction flags on %s from %llx to %llx.", pTarget->GetPlayerName(), oldInteractAs, newInteract);
 	}
+}
+
+CON_COMMAND_CHAT(rs, "reset your score")
+{
+    if (!player)
+        return;
+    
+    player->m_pActionTrackingServices->m_matchStats().m_iKills = 0;
+    player->m_pActionTrackingServices->m_matchStats().m_iDeaths = 0;
+    player->m_pActionTrackingServices->m_matchStats().m_iAssists = 0;
+    player->m_pActionTrackingServices->m_matchStats().m_iDamage = 0;
+    player->m_iScore = 0;
+    player->m_iMVPs = 0;
+
+    ClientPrint(player, HUD_PRINTTALK, " \7[Reset Score]\1 You successfully reset your score.");
 }
 #endif // _DEBUG
 
