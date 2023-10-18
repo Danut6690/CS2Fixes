@@ -199,7 +199,7 @@ CON_COMMAND_CHAT(rs, "reset your score")
     player->m_iScore = 0;
     player->m_iMVPs = 0;
 
-    ClientPrint(player, HUD_PRINTTALK, " \6[KAKAKAKAKA]\1 You successfully reset your score.");
+    ClientPrint(player, HUD_PRINTTALK, " \6[HardGame]\1 Scorul tau a fost resetat cu succes.");
 }
 
 CON_COMMAND_CHAT(stopsound, "stop weapon sounds")
@@ -244,86 +244,6 @@ CON_COMMAND_CHAT(toggledecals, "toggle world decals, if you're into having 10 fp
 	ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You have %s world decals", pZEPlayer->IsUsingStopDecals() ? "disabled" : "enabled");
 }
 
-CON_COMMAND_CHAT(myuid, "test")
-{
-	if (!player)
-		return;
-
-	int iPlayer = player->GetPlayerSlot();
-
-	ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Your userid is %i, slot: %i, retrieved slot: %i", g_pEngineServer2->GetPlayerUserId(iPlayer).Get(), iPlayer, g_playerManager->GetSlotFromUserId(g_pEngineServer2->GetPlayerUserId(iPlayer).Get()));
-}
-
-CON_COMMAND_CHAT(ztele, "teleport to spawn")
-{
-	if (!player)
-		return;
-
-	//Count spawnpoints (info_player_counterterrorist & info_player_terrorist)
-	SpawnPoint* spawn = nullptr;
-	CUtlVector<SpawnPoint*> spawns;
-	while (nullptr != (spawn = (SpawnPoint*)UTIL_FindEntityByClassname(spawn, "info_player_")))
-	{
-		if (spawn->m_bEnabled())
-		{
-			spawns.AddToTail(spawn);
-		}
-	}
-
-	//Pick and get position of random spawnpoint
-	int randomindex = rand() % spawns.Count()+1;
-	Vector spawnpos = spawns[randomindex]->GetAbsOrigin();
-
-	//Here's where the mess starts
-	CBasePlayerPawn* pPawn = player->m_hPawn();
-	if (!pPawn)
-	{
-		return;
-	}
-	if (pPawn->m_iHealth() <= 0)
-	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"You cannot teleport when dead!");
-		return;
-	}
-	//Get initial player position so we can do distance check
-	Vector initialpos = pPawn->GetAbsOrigin();
-
-	ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Teleporting to spawn in 5 seconds.");
-
-	//Convert into handle so we can safely pass it into the Timer
-	auto handle = player->GetHandle();
-	new CTimer(5.0f, false, false, [spawnpos, handle, initialpos]()
-		{
-			//Convert handle into controller so we can use it again, and check it isn't invalid
-			CCSPlayerController* controller = (CCSPlayerController*)Z_CBaseEntity::EntityFromHandle(handle);
-
-			if (!controller || controller->m_iConnected() != PlayerConnectedState::PlayerConnected)
-				return;
-
-			//Get pawn (again) so we can do shit
-			CBasePlayerPawn* pPawn2 = controller->m_hPawn();
-
-			//Get player origin after 5secs
-			Vector endpos = pPawn2->GetAbsOrigin();
-
-			//Get distance between initial and end positions
-			float dist = initialpos.DistTo(endpos);
-
-			//Check le dist
-			//ConMsg("Distance was %f \n", dist);
-			if (dist < 150.0f)
-			{
-				pPawn2->SetAbsOrigin(spawnpos);
-				ClientPrint(controller, HUD_PRINTTALK, CHAT_PREFIX"You have been teleported to spawn.");
-			}
-			else
-			{
-				ClientPrint(controller, HUD_PRINTTALK, CHAT_PREFIX"Teleport failed! You moved too far.");
-				return;
-			}
-		});
-}
-
 // TODO: Make this a convar when it's possible to do so
 static constexpr int g_iMaxHideDistance = 2000;
 
@@ -334,7 +254,7 @@ CON_COMMAND_CHAT(hide, "hides nearby teammates")
 
 	if (args.ArgC() < 2)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Usage: !hide <distance> (0 to disable)");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Exemplu: !hide <distance> (0 to disable)");
 		return;
 	}
 
@@ -396,17 +316,6 @@ CON_COMMAND_CHAT(say, "say something using console")
 	ClientPrintAll(HUD_PRINTTALK, "%s", args.ArgS());
 }
 
-CON_COMMAND_CHAT(takemoney, "take your money")
-{
-	if (!player)
-		return;
-
-	int amount = atoi(args[1]);
-	int money = player->m_pInGameMoneyServices->m_iAccount;
-
-	player->m_pInGameMoneyServices->m_iAccount = money - amount;
-}
-
 CON_COMMAND_CHAT(test_target, "test string targetting")
 {
 	if (!player)
@@ -452,26 +361,6 @@ CON_COMMAND_CHAT(setorigin, "set your origin")
 	pPawn->SetAbsOrigin(vecNewOrigin);
 
 	ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Your origin is now %f %f %f", vecNewOrigin.x, vecNewOrigin.y, vecNewOrigin.z);
-}
-
-CON_COMMAND_CHAT(getstats, "get your stats")
-{
-	if (!player)
-		return;
-
-	CSMatchStats_t *stats = &player->m_pActionTrackingServices->m_matchStats();
-
-	ClientPrint(player, HUD_PRINTCENTER, 
-		"Kills: %i\n"
-		"Deaths: %i\n"
-		"Assists: %i\n"
-		"Damage: %i"
-		, stats->m_iKills.Get(), stats->m_iDeaths.Get(), stats->m_iAssists.Get(), stats->m_iDamage.Get());
-
-	ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Kills: %d", stats->m_iKills.Get());
-	ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Deaths: %d", stats->m_iDeaths.Get());
-	ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Assists: %d", stats->m_iAssists.Get());
-	ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Damage: %d", stats->m_iDamage.Get());
 }
 
 CON_COMMAND_CHAT(setkills, "set your kills")

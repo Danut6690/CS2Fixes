@@ -83,13 +83,13 @@ CON_COMMAND_CHAT(ban, "ban a player")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_BAN))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 3)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Usage: !ban <name> <duration/0 (permanent)>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Exemplu: !ban <jucator> <durata/0 (permanent)>");
 		return;
 	}
 
@@ -98,13 +98,13 @@ CON_COMMAND_CHAT(ban, "ban a player")
 
 	if (g_playerManager->TargetPlayerString(iCommandPlayer, args[1], iNumClients, pSlot) != ETargetType::PLAYER || iNumClients > 1)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"You can only target individual players for banning.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Poti bana un singur jucator.");
 		return;
 	}
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -113,7 +113,7 @@ CON_COMMAND_CHAT(ban, "ban a player")
 
 	if (*end)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Invalid duration.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Durata invalida.");
 		return;
 	}
 
@@ -133,7 +133,7 @@ CON_COMMAND_CHAT(ban, "ban a player")
 	infraction->ApplyInfraction(pTargetPlayer);
 	g_pAdminSystem->SaveInfractions();
 
-	ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "banned %s for %i minutes.", player->GetPlayerName(), pTarget->GetPlayerName(), iDuration);
+	ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "a fost banat %s pentru %i minute.", player->GetPlayerName(), pTarget->GetPlayerName(), iDuration);
 }
 
 CON_COMMAND_CHAT(mute, "mutes a player")
@@ -147,13 +147,13 @@ CON_COMMAND_CHAT(mute, "mutes a player")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_BAN))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 3)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Usage: !mute <name> <duration/0 (permanent)>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Exemplu: !mute <jucator> <durata/0 (permanent)>");
 		return;
 	}
 
@@ -164,7 +164,7 @@ CON_COMMAND_CHAT(mute, "mutes a player")
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -173,7 +173,7 @@ CON_COMMAND_CHAT(mute, "mutes a player")
 
 	if (*end)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Invalid duration.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Durata invalida.");
 		return;
 	}
 
@@ -198,7 +198,7 @@ CON_COMMAND_CHAT(mute, "mutes a player")
 		g_pAdminSystem->SaveInfractions();
 
 		if (nType < ETargetType::ALL)
-			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "muted %s for %i minutes.", player->GetPlayerName(), pTarget->GetPlayerName(), iDuration);
+			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "%s a primit mute pentru %i minute.", player->GetPlayerName(), pTarget->GetPlayerName(), iDuration);
 	}
 
 	g_pAdminSystem->SaveInfractions();
@@ -206,13 +206,13 @@ CON_COMMAND_CHAT(mute, "mutes a player")
 	switch (nType)
 	{
 	case ETargetType::ALL:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "muted everyone for %i minutes.", player->GetPlayerName(), iDuration);
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "a dat mute tuturor jucatorilor pentru %i minute.", player->GetPlayerName(), iDuration);
 		break;
 	case ETargetType::T:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "muted terrorists for %i minutes.", player->GetPlayerName(), iDuration);
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "a dat mute teroristilor pentru %i minute.", player->GetPlayerName(), iDuration);
 		break;
 	case ETargetType::CT:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "muted counter-terrorists for %i minutes.", player->GetPlayerName(), iDuration);
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "a dat mute counter-terroristilor pentru %i minute.", player->GetPlayerName(), iDuration);
 		break;
 	}
 }
@@ -228,13 +228,13 @@ CON_COMMAND_CHAT(unmute, "unmutes a player")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_UNBAN))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 2)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Usage: !unmute <name>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Exemplu: !unmute <jucator>");
 		return;
 	}
 
@@ -245,7 +245,7 @@ CON_COMMAND_CHAT(unmute, "unmutes a player")
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -263,12 +263,12 @@ CON_COMMAND_CHAT(unmute, "unmutes a player")
 
 		if (!g_pAdminSystem->FindAndRemoveInfraction(pTargetPlayer, CInfractionBase::Mute) && nType < ETargetType::ALL)
 		{
-			ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "%s is not muted.", pTarget->GetPlayerName());
+			ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "%s nu are mute.", pTarget->GetPlayerName());
 			continue;
 		}
 
 		if (nType < ETargetType::ALL)
-			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "unmuted %s.", player->GetPlayerName(), pTarget->GetPlayerName());
+			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "i-a dat unmute lui %s.", player->GetPlayerName(), pTarget->GetPlayerName());
 	}
 
 	g_pAdminSystem->SaveInfractions();
@@ -276,13 +276,13 @@ CON_COMMAND_CHAT(unmute, "unmutes a player")
 	switch (nType)
 	{
 	case ETargetType::ALL:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "unmuted everyone.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat unmute tuturor.", player->GetPlayerName());
 		break;
 	case ETargetType::T:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "unmuted terrorists.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat unmute terroristilor.", player->GetPlayerName());
 		break;
 	case ETargetType::CT:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "unmuted counter-terrorists.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat unmute counter-terroristilor.", player->GetPlayerName());
 		break;
 	}
 }
@@ -298,13 +298,13 @@ CON_COMMAND_CHAT(gag, "gag a player")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_BAN))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 3)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Usage: !gag <name> <duration/0 (permanent)>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Exemplu: !gag <jucator> <durata/0 (permanent)>");
 		return;
 	}
 
@@ -315,7 +315,7 @@ CON_COMMAND_CHAT(gag, "gag a player")
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -324,7 +324,7 @@ CON_COMMAND_CHAT(gag, "gag a player")
 
 	if (*end)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Invalid duration.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Durata invalida.");
 		return;
 	}
 
@@ -348,7 +348,7 @@ CON_COMMAND_CHAT(gag, "gag a player")
 		infraction->ApplyInfraction(pTargetPlayer);
 
 		if (nType < ETargetType::ALL)
-			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "gagged %s for %i minutes.", player->GetPlayerName(), pTarget->GetPlayerName(), iDuration);
+			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "i-a dat gag lui %s pentru %i minute.", player->GetPlayerName(), pTarget->GetPlayerName(), iDuration);
 	}
 
 	g_pAdminSystem->SaveInfractions();
@@ -356,13 +356,13 @@ CON_COMMAND_CHAT(gag, "gag a player")
 	switch (nType)
 	{
 	case ETargetType::ALL:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "gagged everyone for %i minutes.", player->GetPlayerName(), iDuration);
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat gag tuturor pentru %i minute.", player->GetPlayerName(), iDuration);
 		break;
 	case ETargetType::T:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "gagged terrorists for %i minutes.", player->GetPlayerName(), iDuration);
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat gag tuturor pentru %i minute.", player->GetPlayerName(), iDuration);
 		break;
 	case ETargetType::CT:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "gagged counter-terrorists for %i minutes.", player->GetPlayerName(), iDuration);
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat gag tuturor pentru %i minute.", player->GetPlayerName(), iDuration);
 		break;
 	}
 }
@@ -378,13 +378,13 @@ CON_COMMAND_CHAT(ungag, "ungags a player")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_UNBAN))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 2)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Usage: !ungag <name>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Exemplu: !ungag <jucator>");
 		return;
 	}
 
@@ -395,7 +395,7 @@ CON_COMMAND_CHAT(ungag, "ungags a player")
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -413,12 +413,12 @@ CON_COMMAND_CHAT(ungag, "ungags a player")
 
 		if (!g_pAdminSystem->FindAndRemoveInfraction(pTargetPlayer, CInfractionBase::Gag) && nType < ETargetType::ALL)
 		{
-			ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "%s is not gagged.", pTarget->GetPlayerName());
+			ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "%s nu are gag.", pTarget->GetPlayerName());
 			continue;
 		}
 
 		if (nType < ETargetType::ALL)
-			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "ungagged %s.", player->GetPlayerName(), pTarget->GetPlayerName());
+			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "i-a dat ungag lui %s.", player->GetPlayerName(), pTarget->GetPlayerName());
 	}
 
 	g_pAdminSystem->SaveInfractions();
@@ -426,13 +426,13 @@ CON_COMMAND_CHAT(ungag, "ungags a player")
 	switch (nType)
 	{
 	case ETargetType::ALL:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "ungagged everyone.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat ungag tuturor.", player->GetPlayerName());
 		break;
 	case ETargetType::T:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "ungagged terrorists.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat ungag terroristilor.", player->GetPlayerName());
 		break;
 	case ETargetType::CT:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "ungagged counter-terrorists.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat ungag counter-terroristilor.", player->GetPlayerName());
 		break;
 	}
 }
@@ -448,13 +448,13 @@ CON_COMMAND_CHAT(kick, "kick a player")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_KICK))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 2)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Usage: !kick <name>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Exemplu: !kick <jucator>");
 		return;
 	}
 
@@ -465,7 +465,7 @@ CON_COMMAND_CHAT(kick, "kick a player")
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -495,13 +495,13 @@ CON_COMMAND_CHAT(slay, "slay a player")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_SLAY))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 2)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Usage: !slay <name>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Exemplu: !slay <jucator>");
 		return;
 	}
 
@@ -512,7 +512,7 @@ CON_COMMAND_CHAT(slay, "slay a player")
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -532,13 +532,13 @@ CON_COMMAND_CHAT(slay, "slay a player")
 	switch (nType)
 	{
 	case ETargetType::ALL:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "slayed everyone.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat slay tuturor.", player->GetPlayerName());
 		break;
 	case ETargetType::T:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "slayed terrorists.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat slay terroristilor.", player->GetPlayerName());
 		break;
 	case ETargetType::CT:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "slayed counter-terrorists.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a dat slay counter-terroristilor.", player->GetPlayerName());
 		break;
 	}
 }
@@ -554,13 +554,13 @@ CON_COMMAND_CHAT(goto, "teleport to a player")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_SLAY))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 2)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Usage: !goto <name>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Exemplu: !goto <jucator>");
 		return;
 	}
 
@@ -569,13 +569,13 @@ CON_COMMAND_CHAT(goto, "teleport to a player")
 
 	if (g_playerManager->TargetPlayerString(iCommandPlayer, args[1], iNumClients, pSlots) != ETargetType::PLAYER || iNumClients > 1)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Target too ambiguous.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Jucatorul este prea departe.");
 		return;
 	}
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -590,7 +590,7 @@ CON_COMMAND_CHAT(goto, "teleport to a player")
 
 		player->GetPawn()->Teleport(&newOrigin, nullptr, nullptr);
 
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "Teleported to %s.", pTarget->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "Te-ai teleportat la %s.", pTarget->GetPlayerName());
 	}
 }
 
@@ -605,13 +605,13 @@ CON_COMMAND_CHAT(bring, "bring a player")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_SLAY))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 2)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Usage: !bring <name>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Exemplu: !bring <jucator>");
 		return;
 	}
 
@@ -622,7 +622,7 @@ CON_COMMAND_CHAT(bring, "bring a player")
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -638,19 +638,19 @@ CON_COMMAND_CHAT(bring, "bring a player")
 		pTarget->GetPawn()->Teleport(&newOrigin, nullptr, nullptr);
 
 		if (nType < ETargetType::ALL)
-			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "brought %s.", player->GetPlayerName(), pTarget->GetPlayerName());
+			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "a luat %s.", player->GetPlayerName(), pTarget->GetPlayerName());
 	}
 
 	switch (nType)
 	{
 	case ETargetType::ALL:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "brought everyone.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a luat tuturor.", player->GetPlayerName());
 		break;
 	case ETargetType::T:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "brought terrorists.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a luat terroristilor.", player->GetPlayerName());
 		break;
 	case ETargetType::CT:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "brought counter-terrorists.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "le-a luat counter-terroristilor.", player->GetPlayerName());
 		break;
 	}
 }
@@ -666,13 +666,13 @@ CON_COMMAND_CHAT(setteam, "set a player's team")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_SLAY))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 3)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Usage: !setteam <name> <team (0-3)>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Exemplu: !setteam <jucator> <team (0-3)>");
 		return;
 	}
 
@@ -683,7 +683,7 @@ CON_COMMAND_CHAT(setteam, "set a player's team")
 
 	if (!iNumClients)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Target not found.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Jucatorul nu a fost gasit.");
 		return;
 	}
 
@@ -691,7 +691,7 @@ CON_COMMAND_CHAT(setteam, "set a player's team")
 
 	if (iTeam < CS_TEAM_NONE || iTeam > CS_TEAM_CT)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Invalid team specified, range is 0-3.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Echipa invalida, range-ul este 0-3.");
 		return;
 	}
 
@@ -706,19 +706,19 @@ CON_COMMAND_CHAT(setteam, "set a player's team")
 		pTarget->GetPawn()->m_iTeamNum = iTeam;
 
 		if (nType < ETargetType::ALL)
-			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "moved %s to team %i.", player->GetPlayerName(), pTarget->GetPlayerName(), iTeam);
+			ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "l-a mutat pe %s la echipa %i.", player->GetPlayerName(), pTarget->GetPlayerName(), iTeam);
 	}
 
 	switch (nType)
 	{
 	case ETargetType::ALL:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "moved everyone to team %i.", iTeam);
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "i-a mutat pe toti la %i.", iTeam);
 		break;
 	case ETargetType::T:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "moved terrorists to team %i.", iTeam);
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "i-a mutat pe teroristi la %i.", iTeam);
 		break;
 	case ETargetType::CT:
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "moved counter-terrorists to team %i.", iTeam);
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "i-a mutat pe counter-terrorististi la %i.", iTeam);
 		break;
 	}
 }
@@ -734,7 +734,7 @@ CON_COMMAND_CHAT(noclip, "toggle noclip on yourself")
 	
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_SLAY))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Nu ai acces la aceasta comanda.");
 		return;
 	}
 
@@ -745,19 +745,19 @@ CON_COMMAND_CHAT(noclip, "toggle noclip on yourself")
 
 	if (pPawn->m_iHealth() <= 0)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You cannot noclip while dead!");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Nu poti sa-ti dai noclip cand esti mort!");
 		return;
 	}
 
 	if (pPawn->m_MoveType() == MOVETYPE_NOCLIP)
 	{
 		pPawn->m_MoveType = MOVETYPE_WALK;
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "exited noclip.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "ti-ai dezactivat noclip-ul.", player->GetPlayerName());
 	}
 	else
 	{
 		pPawn->m_MoveType = MOVETYPE_NOCLIP;
-		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "entered noclip.", player->GetPlayerName());
+		ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX ADMIN_PREFIX "ti-ai activat noclip-ul.", player->GetPlayerName());
 	}
 }
 
@@ -772,23 +772,23 @@ CON_COMMAND_CHAT(map, "change map")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_CHANGEMAP))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 2)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Usage: !map <mapname>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Exemplu: !map <mapname>");
 		return;
 	}
 
 	if (!g_pEngineServer2->IsMapValid(args[1]))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Invalid map specified.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX"Harta introdusa este invalida.");
 		return;
 	}
 
-	ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX"Changing map to %s...", args[1]);
+	ClientPrintAll(HUD_PRINTTALK, CHAT_PREFIX"Harta se schimba in %s...", args[1]);
 
 	char buf[MAX_PATH];
 	V_snprintf(buf, sizeof(buf), "changelevel %s", args[1]);
@@ -810,13 +810,13 @@ CON_COMMAND_CHAT(hsay, "say something as a hud hint")
 
 	if (!pPlayer->IsAdminFlagSet(ADMFLAG_CHAT))
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You don't have access to this command.");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Nu ai acces la aceasta comanda.");
 		return;
 	}
 
 	if (args.ArgC() < 2)
 	{
-		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Usage: !hsay <message>");
+		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Exemplu: !hsay <message>");
 		return;
 	}
 
