@@ -187,6 +187,21 @@ void ClientPrint(CBasePlayerController *player, int hud_dest, const char *msg, .
 	addresses::ClientPrint(player, hud_dest, buf, nullptr, nullptr, nullptr, nullptr);
 }
 
+CON_COMMAND_CHAT(rs, "reset your score")
+{
+    if (!player)
+        return;
+    
+    player->m_pActionTrackingServices->m_matchStats().m_iKills = 0;
+    player->m_pActionTrackingServices->m_matchStats().m_iDeaths = 0;
+    player->m_pActionTrackingServices->m_matchStats().m_iAssists = 0;
+    player->m_pActionTrackingServices->m_matchStats().m_iDamage = 0;
+    player->m_iScore = 0;
+    player->m_iMVPs = 0;
+
+    ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "You successfully reset your score.");
+}
+
 CON_COMMAND_CHAT(stopsound, "stop weapon sounds")
 {
 	if (!player)
@@ -541,21 +556,6 @@ CON_COMMAND_CHAT(setinteraction, "set a player's interaction flags")
 
 		ClientPrint(player, HUD_PRINTTALK, CHAT_PREFIX "Setting interaction flags on %s from %llx to %llx.", pTarget->GetPlayerName(), oldInteractAs, newInteract);
 	}
-}
-
-CON_COMMAND_CHAT(rs, "reset your score")
-{
-    if (!player)
-        return;
-    
-    player->m_pActionTrackingServices->m_matchStats().m_iKills = 0;
-    player->m_pActionTrackingServices->m_matchStats().m_iDeaths = 0;
-    player->m_pActionTrackingServices->m_matchStats().m_iAssists = 0;
-    player->m_pActionTrackingServices->m_matchStats().m_iDamage = 0;
-    player->m_iScore = 0;
-    player->m_iMVPs = 0;
-
-    ClientPrint(player, HUD_PRINTTALK, " \7[KAKAKAKAKA]\1 You successfully reset your score.");
 }
 #endif // _DEBUG
 
